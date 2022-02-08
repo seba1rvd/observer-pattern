@@ -11,25 +11,31 @@ namespace MyConsole
     {
         static void Main(string[] args)
         {
-            ConcreteObserver observer1 = new ConcreteObserver();
-            ConcreteObserver observer2 = new ConcreteObserver();
+            WeatherData wd = new WeatherData();
 
-            ConcreteSubject subject = new ConcreteSubject() { State = 0 };
+            CurrentConditionsDisplay ccd = new CurrentConditionsDisplay();
+            ForecastDisplay fd = new ForecastDisplay();
+            StatisticsDisplay sd = new StatisticsDisplay();
 
-            subject.RegisterObserver(observer1);
-            subject.State = 5;
+            ///Регистрация наблюдателей
+            wd.RegisterObserver(ccd);
+            wd.RegisterObserver(fd);
+            wd.RegisterObserver(sd);
 
-            Console.WriteLine("Наблюдатель 1 - " + observer1.Counter);
+            ///Случайное заполнение текущих температуры, давления, влажности
+            Random rnd = new Random();
+            for (int i = 0; i < 24; i++)
+            {
+                wd.CurrentHumidity = rnd.Next(40, 60);
+                wd.CurrentPressure = rnd.Next(740, 755);
+                wd.CurrentTemperature = rnd.Next(100, 250) / 10.0;
+            }
 
-            subject.RegisterObserver(observer2);
-            subject.State = 3;
-
-            Console.WriteLine("Наблюдатель 2 - " + observer2.Counter);
-
-            subject.RemoveObserver(observer2);
-            subject.State = 0;
-
-            Console.WriteLine("Наблюдатель 1 - " + observer1.Counter + "\nНаблюдатель 2 - " + observer2.Counter);
+            Console.WriteLine(ccd.Display());
+            Console.WriteLine();
+            Console.WriteLine(fd.Display());
+            Console.WriteLine();
+            Console.WriteLine(sd.Display());
 
             Console.ReadKey();
         }

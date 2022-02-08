@@ -6,10 +6,8 @@ using System.Threading.Tasks;
 
 namespace MyLibrary
 {
-    public interface ISubject
+    public interface IDisplayElement
     {
-        void RegisterObserver(IObserver item);
-        void RemoveObserver(IObserver item);
-        void NotifyObserver();
+        string Display();
     }
 }

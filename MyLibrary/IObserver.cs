@@ -8,6 +8,6 @@ namespace MyLibrary
 {
     public interface IObserver
     {
-        void Update();
+        void Update(Data data);
     }
 }
